@@ -1,23 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
-<!-- 
-    <types>
-        <members>Datatable_Configuration_Wizard4</members>
-        <name>Flow</name>
-    </types>
-    <types>
-        <members>ers_QueryNRecords</members>
-        <members>ers_QueryNRecordsTest</members>
-        <members>ers_DatatableController</members>
-        <members>ers_DatatableControllerTest</members>
-        <name>ApexClass</name>
-    </types>
-    <types>
-        <members>datatable</members>
-        <members>richDatatable</members>
-        <members>datatableCPE</members>
-        <name>LightningComponentBundle</name>
-    </types>
-    <version>51.0</version>
--->    
+	<types>
+		<members>GetObjectFieldLabels</members>
+		<members>GetObjectFieldLabelsTest</members>
+		<members>ers_DatatableController</members>
+		<members>ers_DatatableControllerTest</members>
+		<name>ApexClass</name>
+	</types>
+	<types>
+		<members>Datatable_Configuration_Wizard4</members>
+		<members>Datatable_Configuration_Wizard5</members>
+		<name>Flow</name>
+	</types>
+	<types>
+		<members>datatable</members>
+		<members>ers_comboboxColumnType</members>
+		<members>ers_customLightningDatatable</members>
+		<members>ers_datatableCPE</members>
+		<members>ers_datatableUtils</members>
+		<members>formulaRepeater</members>
+		<members>fsc_formulaBuilder3</members>
+		<members>fsc_searchableDataTable</members>
+		<name>LightningComponentBundle</name>
+	</types>
+	<version>65.0</version>
 </Package>

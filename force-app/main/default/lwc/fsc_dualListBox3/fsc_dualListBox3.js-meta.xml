@@ -23,12 +23,12 @@
             <property name="useWhichObjectKeyForData" type="String" role="inputOnly"/>
             <property name="useWhichObjectKeyForLabel" type="String" role="inputOnly"/>
             <property name="useWhichObjectKeyForSort" type="String" role="inputOnly"/>
-            <property name="allOptionsFieldDescriptorList" type="apex://usf3.FieldDescriptor[]" role="inputOnly"/>
+            <property name="allOptionsFieldDescriptorList" type="apex://FieldDescriptor[]" role="inputOnly"/>
             <property name="allOptionsCSV" type="String" role="inputOnly"/>
             <property name="allOptionsStringCollection" type="String[]" role="inputOnly"/>
             <property name="allOptionsStringCollectionLabels" type="String[]" role="inputOnly"/>
             <property name="allOptionsStringFormat" type="String" role="inputOnly"/>
-            <property name="selectedOptionsFieldDescriptorList" type="apex://usf3.FieldDescriptor[]"/>
+            <property name="selectedOptionsFieldDescriptorList" type="apex://FieldDescriptor[]"/>
             <property name="selectedOptionsCSV" type="String"/>
             <property name="selectedOptionsStringList" type="String[]"/>
         </targetConfig>

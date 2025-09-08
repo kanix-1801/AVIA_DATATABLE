@@ -6,7 +6,7 @@
  * @last modified by  : Josh Dayment
 **/
 import { LightningElement, api, track, wire } from 'lwc';
-import flowLabels from '@salesforce/apex/usf3.FlexCardController.getFlowLabel';
+import flowLabels from '@salesforce/apex/FlexCardController.getFlowLabel';
 import { FlowAttributeChangeEvent, FlowNavigationNextEvent, FlowNavigationFinishEvent } from 'lightning/flowSupport';
 import LightningModal from 'lightning/modal';
 import fsc_modalFlow from 'c/fsc_modalFlow';

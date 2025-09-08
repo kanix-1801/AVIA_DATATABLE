@@ -22,7 +22,7 @@ import {
     flowComboboxDefaults
 } from 'c/fsc_flowComboboxUtils';
 import Placeholder_Text from '@salesforce/label/c.fsc_Manual_Reference_Allowed';
-import getObjectFields from '@salesforce/apex/usf3.FieldSelectorController.getObjectFields';    // Requires FlowActionsBasePack v3.17 or later
+import getObjectFields from '@salesforce/apex/FieldSelectorController.getObjectFields';    // Requires FlowActionsBasePack v3.17 or later
 
 // TODO: Handle outputs from Filter and Transform
 /*  Filter Notes (Eric Smith)

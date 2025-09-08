@@ -15,6 +15,14 @@
       "versionName": "Datatable v4",
       "versionDescription": "Datatable Flow Screen Component by Eric Smith",
       "versionNumber": "0.1.0.NEXT"
+    },
+    {
+      "versionName": "ver 0.1",
+      "versionNumber": "0.1.0.NEXT",
+      "path": "force-app",
+      "default": false,
+      "package": "AVIA2.0",
+      "versionDescription": ""
     }
   ],
   "namespace": "",
@@ -100,6 +108,7 @@
     "datatable@4.3.4": "04t5G000004fz9iQAA",
     "FlowScreenComponentsBasePack@3.3.8": "04t5G000004fzAgQAI",
     "datatable@4.3.5": "04t5G000004fzBFQAY",
-    "datatable@4.3.6": "04t5G000004fzCcQAI"
+    "datatable@4.3.6": "04t5G000004fzCcQAI",
+    "AVIA2.0": "0HoQy0000000qcvKAA"
   }
 }

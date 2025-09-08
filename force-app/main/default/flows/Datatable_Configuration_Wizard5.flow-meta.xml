@@ -4,7 +4,7 @@
         <name>Decode_Cell_Attribute</name>
         <label>Decode Cell Attribute</label>
         <locationX>732</locationX>
-        <locationY>158</locationY>
+        <locationY>134</locationY>
         <actionName>ers_EncodeDecodeURL</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -17,13 +17,15 @@
                 <elementReference>wiz_columnCellAttribs</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>ers_EncodeDecodeURL</nameSegment>
+        <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
         <name>Decode_Other_Attribute</name>
         <label>Decode Other Attribute</label>
         <locationX>732</locationX>
-        <locationY>398</locationY>
+        <locationY>350</locationY>
         <actionName>ers_EncodeDecodeURL</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -36,13 +38,15 @@
                 <elementReference>wiz_columnOtherAttribs</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>ers_EncodeDecodeURL</nameSegment>
+        <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
         <name>Decode_Type_Attribute</name>
         <label>Decode Type Attribute</label>
         <locationX>732</locationX>
-        <locationY>278</locationY>
+        <locationY>242</locationY>
         <actionName>ers_EncodeDecodeURL</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -55,13 +59,15 @@
                 <elementReference>wiz_columnTypeAttribs</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>ers_EncodeDecodeURL</nameSegment>
+        <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
         <name>Get_Field_Information_usf</name>
         <label>Get Field Information usf</label>
         <locationX>732</locationX>
-        <locationY>3338</locationY>
+        <locationY>3212</locationY>
         <actionName>usf3__GetFieldInformation</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -74,6 +80,8 @@
                 <elementReference>vSObject</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>usf3__GetFieldInformation</nameSegment>
+        <offset>0</offset>
         <outputParameters>
             <assignToReference>apexColFieldDescriptors_usf</assignToReference>
             <name>fields</name>
@@ -83,11 +91,11 @@
         <name>Get_First_xx_Records</name>
         <label>Get First xx Records</label>
         <locationX>732</locationX>
-        <locationY>4250</locationY>
+        <locationY>4028</locationY>
         <actionName>ers_QueryNRecords</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Get_Records_Result</targetReference>
+            <targetReference>Config_Formula_and_Summary</targetReference>
         </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -108,17 +116,58 @@
                 <elementReference>vWizRecordCount</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>ers_QueryNRecords</nameSegment>
+        <offset>0</offset>
         <outputParameters>
             <assignToReference>vRecordList</assignToReference>
             <name>recordString</name>
         </outputParameters>
     </actionCalls>
+    <actionCalls>
+        <name>Split_Object_Fields_and_Formula_Fields</name>
+        <label>Split Object Fields and Formula Fields</label>
+        <locationX>732</locationX>
+        <locationY>2588</locationY>
+        <actionName>GetObjectFieldLabels</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Update_Field_List</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>inputFieldList</name>
+            <value>
+                <elementReference>vFieldList</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>objectApiName</name>
+            <value>
+                <elementReference>vSObject</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>GetObjectFieldLabels</nameSegment>
+        <offset>0</offset>
+        <outputParameters>
+            <assignToReference>existingFormulaFields</assignToReference>
+            <name>invalidFields</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>validFieldsOnObject</assignToReference>
+            <name>validFields</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>colFields</assignToReference>
+            <name>validFieldsArray</name>
+        </outputParameters>
+    </actionCalls>
     <apiVersion>57.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Add_Config_Quick_Choice_Option</name>
         <label>Add Config Quick Choice Option</label>
         <locationX>578</locationX>
-        <locationY>1334</locationY>
+        <locationY>1190</locationY>
         <assignmentItems>
             <assignToReference>colTitles</assignToReference>
             <operator>Add</operator>
@@ -145,10 +194,26 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Add_Formula_Columns</name>
+        <label>Add Formula Columns</label>
+        <locationX>600</locationX>
+        <locationY>4352</locationY>
+        <assignmentItems>
+            <assignToReference>vFieldList</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>formulaColumns</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Records_Result</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Add_Last_Field</name>
         <label>Add Last Field</label>
         <locationX>402</locationX>
-        <locationY>2510</locationY>
+        <locationY>2246</locationY>
         <assignmentItems>
             <assignToReference>colFieldList</assignToReference>
             <operator>Add</operator>
@@ -171,14 +236,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Loop_Previously_Selected_Fields</targetReference>
+            <targetReference>Split_Object_Fields_and_Formula_Fields</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Assign_Config_Fields</name>
         <label>Assign Config Fields</label>
         <locationX>534</locationX>
-        <locationY>2030</locationY>
+        <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>colFieldList</assignToReference>
             <operator>Assign</operator>
@@ -317,7 +382,7 @@
         <name>Assign_PreSelected</name>
         <label>Assign PreSelected</label>
         <locationX>446</locationX>
-        <locationY>1118</locationY>
+        <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>colPreSelectedConfigs</assignToReference>
             <operator>Assign</operator>
@@ -333,7 +398,7 @@
         <name>Clear_Early_Exit_Flag</name>
         <label>Clear Early Exit Flag</label>
         <locationX>1062</locationX>
-        <locationY>5066</locationY>
+        <locationY>5168</locationY>
         <assignmentItems>
             <assignToReference>vEarlyExit</assignToReference>
             <operator>Assign</operator>
@@ -349,7 +414,7 @@
         <name>Clear_Record_Id</name>
         <label>Clear Record Id</label>
         <locationX>1194</locationX>
-        <locationY>5786</locationY>
+        <locationY>5816</locationY>
         <assignmentItems>
             <assignToReference>objConfig.Id</assignToReference>
             <operator>Assign</operator>
@@ -362,7 +427,7 @@
         <name>Get_Config_Record_Count</name>
         <label>Get Config Record Count</label>
         <locationX>578</locationX>
-        <locationY>878</locationY>
+        <locationY>782</locationY>
         <assignmentItems>
             <assignToReference>vConfigCount</assignToReference>
             <operator>AssignCount</operator>
@@ -378,7 +443,7 @@
         <name>Initialize_Width_Flex_Processing</name>
         <label>Initialize Width &amp; Flex Processing</label>
         <locationX>534</locationX>
-        <locationY>2150</locationY>
+        <locationY>1922</locationY>
         <assignmentItems>
             <assignToReference>vSeparatorLength</assignToReference>
             <operator>Assign</operator>
@@ -408,7 +473,7 @@
         <name>Process_Config_Field</name>
         <label>Process Config Field</label>
         <locationX>666</locationX>
-        <locationY>2510</locationY>
+        <locationY>2246</locationY>
         <assignmentItems>
             <assignToReference>colFieldList</assignToReference>
             <operator>Add</operator>
@@ -432,7 +497,7 @@
         <name>Save_Configuration_Data</name>
         <label>Save Configuration Data</label>
         <locationX>1062</locationX>
-        <locationY>5186</locationY>
+        <locationY>5276</locationY>
         <assignmentItems>
             <assignToReference>objConfig.Selection_Method__c</assignToReference>
             <operator>Assign</operator>
@@ -532,7 +597,7 @@
         <name>Save_Selected_Config_Record</name>
         <label>Save Selected Config Record</label>
         <locationX>1062</locationX>
-        <locationY>4610</locationY>
+        <locationY>4760</locationY>
         <assignmentItems>
             <assignToReference>objConfig</assignToReference>
             <operator>Assign</operator>
@@ -562,7 +627,7 @@
         <name>Save_Selection_Method</name>
         <label>Save Selection Method</label>
         <locationX>732</locationX>
-        <locationY>1670</locationY>
+        <locationY>1490</locationY>
         <assignmentItems>
             <assignToReference>vSelectionMethod</assignToReference>
             <operator>Assign</operator>
@@ -578,7 +643,7 @@
         <name>Separate_Width_Flex_Attributes</name>
         <label>Separate Width &amp; Flex Attributes</label>
         <locationX>534</locationX>
-        <locationY>2270</locationY>
+        <locationY>2030</locationY>
         <assignmentItems>
             <assignToReference>wiz_columnWidths</assignToReference>
             <operator>Assign</operator>
@@ -601,7 +666,7 @@
         <name>Set_Error_Flag</name>
         <label>Set Error Flag</label>
         <locationX>930</locationX>
-        <locationY>5666</locationY>
+        <locationY>5708</locationY>
         <assignmentItems>
             <assignToReference>vDuplicateNameError</assignToReference>
             <operator>Assign</operator>
@@ -625,7 +690,7 @@
         <name>Set_Field_List_Parameter</name>
         <label>Set Field List Parameter</label>
         <locationX>798</locationX>
-        <locationY>3698</locationY>
+        <locationY>3536</locationY>
         <assignmentItems>
             <assignToReference>vFieldList</assignToReference>
             <operator>Assign</operator>
@@ -648,7 +713,7 @@
         <name>Set_Field_List_Parameter_0</name>
         <label>Set Field List Parameter</label>
         <locationX>50</locationX>
-        <locationY>3818</locationY>
+        <locationY>3644</locationY>
         <assignmentItems>
             <assignToReference>wiz_columnFields</assignToReference>
             <operator>Assign</operator>
@@ -664,7 +729,7 @@
         <name>Set_Field_Name</name>
         <label>Set Field Name</label>
         <locationX>820</locationX>
-        <locationY>3002</locationY>
+        <locationY>2912</locationY>
         <assignmentItems>
             <assignToReference>apexFieldDescriptor.name</assignToReference>
             <operator>Assign</operator>
@@ -680,7 +745,7 @@
         <name>Set_Metadata_Name_create</name>
         <label>Set Metadata Name</label>
         <locationX>1194</locationX>
-        <locationY>5666</locationY>
+        <locationY>5708</locationY>
         <assignmentItems>
             <assignToReference>objConfig.Name</assignToReference>
             <operator>Assign</operator>
@@ -703,7 +768,7 @@
         <name>Set_Quick_Choice_Options</name>
         <label>Set Quick Choice Options</label>
         <locationX>732</locationX>
-        <locationY>518</locationY>
+        <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>colTitles</assignToReference>
             <operator>Add</operator>
@@ -779,10 +844,33 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Update_Field_List</name>
+        <label>Update Field List</label>
+        <locationX>732</locationX>
+        <locationY>2696</locationY>
+        <assignmentItems>
+            <assignToReference>vFieldList</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>validFieldsOnObject</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>colFieldList</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>colFields</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_Previously_Selected_Fields</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Update_Selected_Field_Descriptors</name>
         <label>Update Selected Field Descriptors</label>
         <locationX>820</locationX>
-        <locationY>3122</locationY>
+        <locationY>3020</locationY>
         <assignmentItems>
             <assignToReference>apexColSelectedFieldDescriptors_usf</assignToReference>
             <operator>Add</operator>
@@ -798,7 +886,7 @@
         <name>Update_Special_Attributes</name>
         <label>Update Special Attributes</label>
         <locationX>930</locationX>
-        <locationY>4850</locationY>
+        <locationY>4976</locationY>
         <assignmentItems>
             <assignToReference>wiz_columnCellAttribs</assignToReference>
             <operator>Assign</operator>
@@ -828,7 +916,7 @@
         <name>Wizard_Finish_ass</name>
         <label>Wizard Finish</label>
         <locationX>1062</locationX>
-        <locationY>6218</locationY>
+        <locationY>6200</locationY>
         <assignmentItems>
             <assignToReference>vEarlyExit</assignToReference>
             <operator>Assign</operator>
@@ -869,7 +957,7 @@
         <name>Any_Fields_Selected</name>
         <label>Any Fields Selected?</label>
         <locationX>182</locationX>
-        <locationY>3698</locationY>
+        <locationY>3536</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
             <targetReference>Select_Fields</targetReference>
@@ -895,7 +983,7 @@
         <name>Check_Field_Selection_Method</name>
         <label>Check Field Selection Method</label>
         <locationX>732</locationX>
-        <locationY>3578</locationY>
+        <locationY>3428</locationY>
         <defaultConnectorLabel>Error</defaultConnectorLabel>
         <rules>
             <name>PICK</name>
@@ -932,7 +1020,7 @@
         <name>Config_Record</name>
         <label>Config Record?</label>
         <locationX>1062</locationX>
-        <locationY>5306</locationY>
+        <locationY>5384</locationY>
         <defaultConnector>
             <targetReference>Wizard_Finish_ass</targetReference>
         </defaultConnector>
@@ -986,7 +1074,7 @@
         <name>Did_User_Enter_Field_List</name>
         <label>Did User Enter Field List?</label>
         <locationX>798</locationX>
-        <locationY>3818</locationY>
+        <locationY>3644</locationY>
         <defaultConnectorLabel>Error</defaultConnectorLabel>
         <rules>
             <name>YES</name>
@@ -1024,7 +1112,7 @@
         <name>Found_Config_Records</name>
         <label>Found Config Records?</label>
         <locationX>732</locationX>
-        <locationY>758</locationY>
+        <locationY>674</locationY>
         <defaultConnector>
             <targetReference>Field_Selection_Method_Screen</targetReference>
         </defaultConnector>
@@ -1049,7 +1137,7 @@
         <name>Get_Records_Result</name>
         <label>Get Records Result</label>
         <locationX>732</locationX>
-        <locationY>4370</locationY>
+        <locationY>4544</locationY>
         <defaultConnector>
             <targetReference>Wizard_Screen</targetReference>
         </defaultConnector>
@@ -1074,7 +1162,7 @@
         <name>How_Many_Records</name>
         <label>How Many Records?</label>
         <locationX>578</locationX>
-        <locationY>998</locationY>
+        <locationY>890</locationY>
         <defaultConnector>
             <targetReference>Add_Config_Quick_Choice_Option</targetReference>
         </defaultConnector>
@@ -1096,10 +1184,35 @@
         </rules>
     </decisions>
     <decisions>
+        <name>is_Formula_Blank</name>
+        <label>is Formula Blank?</label>
+        <locationX>732</locationX>
+        <locationY>4244</locationY>
+        <defaultConnector>
+            <targetReference>Get_Records_Result</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Yes</defaultConnectorLabel>
+        <rules>
+            <name>Not_BlankFormula</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>formulaFieldsLabel</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Add_Formula_Columns</targetReference>
+            </connector>
+            <label>No</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Last_Field</name>
         <label>Last Field?</label>
         <locationX>534</locationX>
-        <locationY>2390</locationY>
+        <locationY>2138</locationY>
         <defaultConnector>
             <targetReference>Process_Config_Field</targetReference>
         </defaultConnector>
@@ -1124,7 +1237,7 @@
         <name>Name_Already_Exists</name>
         <label>Name Already Exists?</label>
         <locationX>1062</locationX>
-        <locationY>5546</locationY>
+        <locationY>5600</locationY>
         <defaultConnector>
             <targetReference>Set_Metadata_Name_create</targetReference>
         </defaultConnector>
@@ -1149,9 +1262,9 @@
         <name>Selected_Option</name>
         <label>Selected Option?</label>
         <locationX>732</locationX>
-        <locationY>1790</locationY>
+        <locationY>1598</locationY>
         <defaultConnector>
-            <targetReference>Loop_Previously_Selected_Fields</targetReference>
+            <targetReference>Split_Object_Fields_and_Formula_Fields</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Pick or Type</defaultConnectorLabel>
         <rules>
@@ -1174,7 +1287,7 @@
         <name>Special_Attribute_Changes</name>
         <label>Special Attribute Changes?</label>
         <locationX>1062</locationX>
-        <locationY>4730</locationY>
+        <locationY>4868</locationY>
         <defaultConnector>
             <targetReference>Clear_Early_Exit_Flag</targetReference>
         </defaultConnector>
@@ -1224,6 +1337,11 @@
         <scale>0</scale>
     </formulas>
     <formulas>
+        <name>formulaColumns</name>
+        <dataType>String</dataType>
+        <expression>&apos;,&apos; &amp; {!formulaFieldsLabel}</expression>
+    </formulas>
+    <formulas>
         <name>fRemoveField</name>
         <dataType>String</dataType>
         <expression>MID({!vConfigFields},FIND(&quot;,&quot;,{!vConfigFields})+1,999)</expression>
@@ -1256,7 +1374,7 @@
         <name>Loop_Previously_Selected_Fields</name>
         <label>Loop Previously Selected Fields</label>
         <locationX>732</locationX>
-        <locationY>2882</locationY>
+        <locationY>2804</locationY>
         <collectionReference>colFieldList</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -1289,7 +1407,7 @@
         <name>Create_New_Config_Record</name>
         <label>Create New Config Record</label>
         <locationX>1194</locationX>
-        <locationY>5906</locationY>
+        <locationY>5924</locationY>
         <connector>
             <targetReference>Wizard_Finish_ass</targetReference>
         </connector>
@@ -1299,7 +1417,7 @@
         <name>Check_For_Existing_Config_Record</name>
         <label>Check For Existing Config Record</label>
         <locationX>1062</locationX>
-        <locationY>5426</locationY>
+        <locationY>5492</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Name_Already_Exists</targetReference>
@@ -1320,7 +1438,7 @@
         <name>Get_Available_Config_Records</name>
         <label>Get Available Config Records</label>
         <locationX>732</locationX>
-        <locationY>638</locationY>
+        <locationY>566</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Found_Config_Records</targetReference>
@@ -1350,17 +1468,68 @@
         <name>Save_Config_Record</name>
         <label>Save Config Record</label>
         <locationX>666</locationX>
-        <locationY>5426</locationY>
+        <locationY>5492</locationY>
         <connector>
             <targetReference>Wizard_Finish_ass</targetReference>
         </connector>
         <inputReference>objConfig</inputReference>
     </recordUpdates>
     <screens>
+        <name>Config_Formula_and_Summary</name>
+        <label>Config Formula and Summary</label>
+        <locationX>732</locationX>
+        <locationY>4136</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>is_Formula_Blank</targetReference>
+        </connector>
+        <fields>
+            <name>Add_Formula_Summary</name>
+            <extensionName>c:formulaRepeater</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>picklistOptions</name>
+                <value>
+                    <elementReference>apexColSelectedFieldDescriptors_usf</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>formulaFieldsLabel</assignToReference>
+                <name>columnNames</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>wiz_formulaFields</assignToReference>
+                <name>repeaterValues</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>wiz_summaryFields</assignToReference>
+                <name>summaryFieldValues</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>wiz_validationFields</assignToReference>
+                <name>validationFieldValues</name>
+            </outputParameters>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Field_Selection_Method_Screen</name>
         <label>Field Selection Method Screen</label>
         <locationX>732</locationX>
-        <locationY>1550</locationY>
+        <locationY>1382</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1371,6 +1540,14 @@
             <name>qcHeader</name>
             <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px; background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;{!vSObject}&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <fields>
             <name>FieldSelectionMethod</name>
@@ -1451,6 +1628,14 @@
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
@@ -1459,7 +1644,7 @@
         <name>Select_Config_Record</name>
         <label>Select Config Record</label>
         <locationX>534</locationX>
-        <locationY>1910</locationY>
+        <locationY>1706</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1591,6 +1776,14 @@
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
@@ -1599,7 +1792,7 @@
         <name>Select_Fields</name>
         <label>Select Fields</label>
         <locationX>732</locationX>
-        <locationY>3458</locationY>
+        <locationY>3320</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1610,6 +1803,14 @@
             <name>Object</name>
             <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;{!vSObject}&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <fields>
             <name>SelectFields</name>
@@ -1691,6 +1892,14 @@
                 <assignToReference>apexColSelectedFieldDescriptors_usf</assignToReference>
                 <name>selectedOptionsFieldDescriptorList</name>
             </outputParameters>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
                 <conditions>
@@ -1717,7 +1926,16 @@
             </defaultValue>
             <fieldText>Enter a comma separated list of field API names</fieldText>
             <fieldType>InputField</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>false</isRequired>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
@@ -1736,7 +1954,7 @@
         <name>Wizard_Exit</name>
         <label>Wizard Exit</label>
         <locationX>402</locationX>
-        <locationY>4490</locationY>
+        <locationY>4652</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1744,6 +1962,14 @@
             <name>FinishMessage_0</name>
             <fieldText>&lt;p&gt;&lt;b style=&quot;color: rgb(182, 56, 56); font-size: 24px;&quot;&gt;&lt;i&gt;The ﻿﻿Column Wizard requires that the selected Object ({!vSObject}) has at least one record!&lt;/i&gt;&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <nextOrFinishButtonLabel>Cancel</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
@@ -1753,7 +1979,7 @@
         <name>Wizard_Screen</name>
         <label>Wizard Screen</label>
         <locationX>1062</locationX>
-        <locationY>4490</locationY>
+        <locationY>4652</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1764,6 +1990,14 @@
             <name>debug</name>
             <fieldText>&lt;p&gt;Debug Mode: {!vDebugMode}&lt;/p&gt;&lt;p&gt;Selected Object: {!vSObject}&lt;/p&gt;&lt;p&gt;Selected Fields: {!vFieldList}&lt;/p&gt;&lt;p&gt;Selected Field Descriptors: {!apexColSelectedFieldDescriptors_usf}&lt;/p&gt;&lt;p&gt;10 Records: {!vRecordList}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;u&gt;Wizard Attributes&lt;/u&gt;&lt;/p&gt;&lt;p&gt;Alignments: {!wiz_columnAlignments}&lt;/p&gt;&lt;p&gt;Edits: {!wiz_columnEdits}&lt;/p&gt;&lt;p&gt;Filters: {!wiz_columnFilters}&lt;/p&gt;&lt;p&gt;Labels: {!wiz_columnLabels}&lt;/p&gt;&lt;p&gt;Icons: {!wiz_columnIcons}&lt;/p&gt;&lt;p&gt;Widths: {!wiz_columnWidths}&lt;/p&gt;&lt;p&gt;Flexes: {!wiz_columnFlexes}&lt;/p&gt;&lt;p&gt;Wraps: {!wiz_columnWraps}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
@@ -1885,6 +2119,24 @@
                     <elementReference>wiz_columnFlexes</elementReference>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>formulaFields</name>
+                <value>
+                    <elementReference>wiz_formulaFields</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>summaryFields</name>
+                <value>
+                    <elementReference>wiz_summaryFields</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>validationFields</name>
+                <value>
+                    <elementReference>wiz_validationFields</elementReference>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <outputParameters>
@@ -1927,6 +2179,26 @@
                 <assignToReference>wiz_objectName</assignToReference>
                 <name>wizSObject</name>
             </outputParameters>
+            <outputParameters>
+                <assignToReference>wiz_formulaFields</assignToReference>
+                <name>wizFormulaFields</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>wiz_summaryFields</assignToReference>
+                <name>wizSummaryFields</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>wiz_validationFields</assignToReference>
+                <name>wizValidationFields</name>
+            </outputParameters>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <fields>
             <name>AttributeToggle</name>
@@ -1959,6 +2231,14 @@
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <fields>
             <name>Special_Cell_Attributes</name>
@@ -1968,7 +2248,16 @@
             </defaultValue>
             <fieldText>Special Cell Attributes</fieldText>
             <fieldType>InputField</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>false</isRequired>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
                 <conditions>
@@ -1988,7 +2277,16 @@
             </defaultValue>
             <fieldText>Special Type Attributes</fieldText>
             <fieldType>InputField</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>false</isRequired>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
                 <conditions>
@@ -2008,7 +2306,16 @@
             </defaultValue>
             <fieldText>Special Other Attributes</fieldText>
             <fieldType>InputField</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>false</isRequired>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
                 <conditions>
@@ -2057,6 +2364,14 @@
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
@@ -2099,6 +2414,14 @@
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <fields>
             <name>ConfigTable_saveas</name>
@@ -2219,6 +2542,14 @@
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
@@ -2267,6 +2598,14 @@
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
@@ -2286,7 +2625,16 @@
             </defaultValue>
             <fieldText>New Configuration Record Name (Enter a name here if you want to create a new record of this configuration for reuse later)</fieldText>
             <fieldType>InputField</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>false</isRequired>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
@@ -2302,6 +2650,14 @@
             <name>DuplicateNameErrorMessage</name>
             <fieldText>&lt;p&gt;&lt;i style=&quot;color: rgb(255, 0, 0);&quot;&gt;A Configuration Record with the name &lt;/i&gt;&lt;b style=&quot;color: rgb(255, 0, 0);&quot;&gt;&lt;i&gt;{!vNewConfigName}&lt;/i&gt;&lt;/b&gt;&lt;i style=&quot;color: rgb(255, 0, 0);&quot;&gt; already exists. Please provide a unique name for a new record.&lt;/i&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
@@ -2350,6 +2706,14 @@
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
@@ -2398,6 +2762,14 @@
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
         </fields>
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
@@ -2409,10 +2781,10 @@
             <targetReference>Decode_Cell_Attribute</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>apexColFieldDescriptors_usf</name>
-        <apexClass>usf3__FieldDescriptor</apexClass>
+        <apexClass>FieldDescriptor</apexClass>
         <dataType>Apex</dataType>
         <isCollection>true</isCollection>
         <isInput>false</isInput>
@@ -2420,7 +2792,7 @@
     </variables>
     <variables>
         <name>apexColSelectedFieldDescriptors_usf</name>
-        <apexClass>usf3__FieldDescriptor</apexClass>
+        <apexClass>FieldDescriptor</apexClass>
         <dataType>Apex</dataType>
         <isCollection>true</isCollection>
         <isInput>false</isInput>
@@ -2428,7 +2800,7 @@
     </variables>
     <variables>
         <name>apexFieldDescriptor</name>
-        <apexClass>usf3__FieldDescriptor</apexClass>
+        <apexClass>FieldDescriptor</apexClass>
         <dataType>Apex</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
@@ -2446,6 +2818,13 @@
         <dataType>String</dataType>
         <isCollection>true</isCollection>
         <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>colFields</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>
@@ -2471,12 +2850,34 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <name>existingFormulaFields</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>formulaFieldsLabel</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>objConfig</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>FlowTableViewDefinition__c</objectType>
+    </variables>
+    <variables>
+        <description>Store Object Related Fields</description>
+        <name>validFieldsOnObject</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>vCombinedAttribute</name>
@@ -2700,10 +3101,31 @@
         <isOutput>true</isOutput>
     </variables>
     <variables>
+        <name>wiz_formulaFields</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
         <name>wiz_objectName</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>wiz_summaryFields</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>wiz_validationFields</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
     </variables>
 </Flow>
